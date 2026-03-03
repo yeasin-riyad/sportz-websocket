@@ -17,17 +17,20 @@ matchRouter.get("/", async(req, res) => {
         const matchesList=await db.select().from(matches).orderBy((desc(matches.createdAt))).limit(limit);
         res.status(200).json({data: matchesList });
     } catch (error) {
-        res.status(500).json({ message: "Failed to fetch matches", details:JSON.stringify(error) });
+        console.error("Failed to fetch matches", error);
+        res.status(500).json({ message: "Failed to fetch matches" });
     }
 });
 
 matchRouter.post("/", async (req, res) => {
     const parsed=createMatchSchema.safeParse(req.body);
-    const {data:{startTime,endTime,homeScore,awayScore}}=parsed;
+
     if(!parsed.success){
         return res.status(400).json({ message: "Invalid match data", details:JSON.stringify(parsed.error) });
 
     }
+ const { startTime, endTime, homeScore, awayScore } = parsed.data;
+
     try {
         // Here you would typically insert the new match into your database
         const [event]=await db.insert(matches).values({
@@ -42,7 +45,8 @@ matchRouter.post("/", async (req, res) => {
         res.status(201).json({ message: "Match created successfully", data: event });    
         
     } catch (error) {
-        res.status(500).json({ message: "Failed to create match", details:JSON.stringify(error) });
+        console.error("Failed to create match", error);
+        res.status(500).json({ message: "Failed to create match" });
         
     }
 });

@@ -37,8 +37,8 @@ export const createMatchSchema = z
     sport: z.string().min(1, 'Sport cannot be empty'),
     homeTeam: z.string().min(1, 'Home team cannot be empty'),
     awayTeam: z.string().min(1, 'Away team cannot be empty'),
-    startTime: z.string(),
-    endTime: z.string(),
+     startTime: z.string().datetime({ offset: true }),
+    endTime: z.string().datetime({ offset: true }),
     homeScore: z.coerce
       .number()
       .int()
@@ -52,25 +52,9 @@ export const createMatchSchema = z
       .default(0)
       .optional(),
   })
-  .refine(
-    (data) => {
-      try {
-        const start = new Date(data.startTime);
-        const end = new Date(data.endTime);
-        return !isNaN(start.getTime()) && !isNaN(end.getTime());
-      } catch {
-        return false;
-      }
-    },
-    {
-      message: 'startTime and endTime must be valid ISO date strings',
-      path: ['startTime', 'endTime'],
-    }
-  )
   .superRefine((data, ctx) => {
     const startTime = new Date(data.startTime);
     const endTime = new Date(data.endTime);
-
     if (endTime <= startTime) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
