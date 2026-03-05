@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 import { matchRouter } from './routes/matches.js';
 import { attachWebSocketServer } from './ws/server.js';
-import { matchRouter } from './routes/matches.js';
+import { securityMiddleware } from './arcjet.js';
 
 
 
@@ -19,6 +19,9 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the Sportz API!' });
 });
+
+
+app.use(securityMiddleware());
 
 
 // Import and use match routes
