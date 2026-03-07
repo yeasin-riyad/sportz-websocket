@@ -1,3 +1,5 @@
+import AgentAPI from 'apminsight';
+AgentAPI.config();
 import express from 'express';
 import http from 'http';
 import { matchRouter } from './routes/matches.js';
@@ -22,7 +24,7 @@ app.get('/', (req, res) => {
 });
 
 
-// app.use(securityMiddleware());
+app.use(securityMiddleware());
 
 
 // Import and use match routes
