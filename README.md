@@ -14,7 +14,7 @@ This project demonstrates how to architect a scalable system capable of broadcas
 
 ## 📊 Real-Time Score Updates
 
-(./screenshot<img width="1878" height="1076" alt="live-score" src="https://github.com/user-attachments/assets/d1ba9bb5-4a80-432c-a6a7-f8171958a2f8" />
+(<img width="1878" height="1076" alt="live-score" src="https://github.com/user-attachments/assets/d1ba9bb5-4a80-432c-a6a7-f8171958a2f8" />
 
 
 ---
